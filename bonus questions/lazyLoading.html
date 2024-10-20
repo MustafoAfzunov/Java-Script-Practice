@@ -1,0 +1,27 @@
+<img class="lazy" data-src="image1.jpg" alt="Lazy Image 1">
+<img class="lazy" data-src="image2.jpg" alt="Lazy Image 2">
+
+<script>
+  const lazyImages = document.querySelectorAll('.lazy');
+
+  const lazyLoad = (image) => {
+    const src = image.dataset.src;
+    if (src) {
+      image.src = src;
+      image.classList.remove('lazy');
+    }
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        lazyLoad(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  });
+
+  lazyImages.forEach(image => {
+    observer.observe(image);
+  });
+</script>

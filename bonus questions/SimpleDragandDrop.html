@@ -1,0 +1,22 @@
+<div id="draggable" draggable="true">Drag Me</div>
+<div id="dropzone">Drop Here</div>
+
+<script>
+  const draggable = document.getElementById('draggable');
+  const dropzone = document.getElementById('dropzone');
+
+  draggable.addEventListener('dragstart', (event) => {
+    event.dataTransfer.setData('text/plain', event.target.id);
+  });
+
+  dropzone.addEventListener('dragover', (event) => {
+    event.preventDefault(); // Necessary to allow dropping
+  });
+
+  dropzone.addEventListener('drop', (event) => {
+    event.preventDefault();
+    const id = event.dataTransfer.getData('text');
+    const draggableElement = document.getElementById(id);
+    dropzone.appendChild(draggableElement);
+  });
+</script>
